@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <title>Všechno nejlepší Nicol, ať se mas hezky, hodne zdravi a lasku.☺</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom right, #00fff6, #9400ff);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    #gift-container, #tree-container {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: opacity 1s ease;
+    }
+
+    /* DÁREK */
+    #gift {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle at top left, #ff4d4d, #cc0000);
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: opacity 3s ease;  /* Přidáno plynulé miznutí */
+      opacity: 1;                   /* Výchozí plná viditelnost */
+    }
+
+    #gift::before, #gift::after {
+      content: "";
+      position: absolute;
+      background: #ff9393;
+    }
+
+    #gift::before {
+      top: 49%;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      transform: translateY(-50%);
+    }
+
+    #gift::after {
+      left: 50%;
+      top: 0;
+      width: 20px;
+      height: 100%;
+      transform: translateX(-50%);
+    }
+
+    #lid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: #b30000;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      transform-origin: bottom right;
+      transition: transform 1s ease;
+      z-index: 10;
+    }
+
+    .bow {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 30px;
+      background: #ff0000;
+      border-radius: 50%;
+      box-shadow: 31px 0 #ff1a1a, -30px 0 #ff1a1a;
+    }
+
+    /* TEXT */
+    #message {
+      margin-top: 60px;
+      font-size: 2rem;
+      color: #0f007d;
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease;
+      transform: translateY(20px);
+    }
+
+    /* STROM */
+    #tree-container {
+      opacity: 0;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+      position: relative;
+    }
+
+    #trunk {
+      width: 20px;
+      height: 100px;
+      background: #5a3825;
+      border-radius: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    #leaves {
+      position: absolute;
+      top: -160px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 150px;
+    }
+
+    .leaf-heart {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: red;
+      transform: rotate(45deg);
+    }
+
+    .leaf-heart::before,
+    .leaf-heart::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .leaf-heart::before {
+      top: -20px;
+      left: 0;
+    }
+
+    .leaf-heart::after {
+      left: -20px;
+      top: 0;
+    }
+
+    /* Padající květiny */
+    .flower {
+      position: absolute;
+      top: -20px;
+      width: 15px;
+      height: 15px;
+      background: transparent;
+      animation: fall 50s linear infinite;
+      opacity: 0.8;
+    }
+
+    .flower::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border-radius: 50%;
+      box-shadow:
+        0 -12px 0 0 red,
+        10px -6px 0 0 red,
+        10px 6px 0 0 red,
+        0 12px 0 0 red,
+        -10px 6px 0 0 red,
+        -10px -6px 0 0 red;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-60px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="gift-container">
+    <div id="gift">
+      <div id="lid">
+        <div class="bow"></div>
+      </div>
+    </div>
+    <div id="message">Všechno nejlepší Nicol, ať se máš hezky, hodně zdraví a lásku.☻</div>
+  </div>
+
+  <div id="tree-container">
+    <div id="trunk"></div>
+    <div id="leaves">
+      <div class="leaf-heart" style="top: 95px; left: 130px; transform: rotate(45deg);"></div>
+      <div class="leaf-heart" style="top: 129px; left: 98px; transform: rotate(-46deg);"></div>
+      <div class="leaf-heart" style="top: 128px; left: 162px; transform: rotate(134deg);"></div>
+    </div>
+  </div>
+
+  <script>
+    const gift = document.getElementById('gift');
+    const lid = document.getElementById('lid');
+    const message = document.getElementById('message');
+    const giftContainer = document.getElementById('gift-container');
+    const treeContainer = document.getElementById('tree-container');
+
+    function createFlowers() {
+      for (let i = 0; i < 20; i++) {
+        const flower = document.createElement('div');
+        flower.classList.add('flower');
+        flower.style.left = Math.random() * 100 + 'vw';
+        flower.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        flower.style.opacity = Math.random();
+        document.body.appendChild(flower);
+      }
+    }
+
+    document.addEventListener('click', () => {
+      lid.style.transform = 'rotateZ(120deg)';
+      setTimeout(() => {
+        message.style.opacity = 1;
+        message.style.transform = 'translateY(0)';
+      }, 1000);
+
+      setTimeout(() => {
+        gift.style.opacity = 0;  // zmizení dárku s animací
+        treeContainer.style.opacity = 1;
+        createFlowers();
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
